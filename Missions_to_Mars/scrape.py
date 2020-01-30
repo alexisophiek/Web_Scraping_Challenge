@@ -25,7 +25,6 @@ def mars_news(browser):
         slide_element.find("div", class_="content_title")
 
         # Scrape the Latest News Title
-        # Use Parent Element to Find First <a> Tag and Save it as news_title
         news_title = slide_element.find("div", class_="content_title").get_text()
 
         news_paragraph = slide_element.find("div", class_="article_teaser_body").get_text()
@@ -63,7 +62,6 @@ def twitter_weather(browser):
     # Visit the Mars Weather Twitter Account
     twitter_url = "https://twitter.com/marswxreport?lang=en"
     response_twitter = requests.get(twitter_url)
-    response_twitter
     browser.visit(twitter_url)
     
     # Parse Results HTML with BeautifulSoup
@@ -71,13 +69,13 @@ def twitter_weather(browser):
     weather_soup = bs(html, "html.parser")
     
     # Find a Tweet with the data-name `Mars Weather`
-    mars_weather_tweet = weather_soup.find("div", 
-                                       attrs={
-                                           "class": "tweet", 
-                                            "data-name": "Mars Weather"
-                                        })
+    # mars_weather_tweet = weather_soup.find("div", 
+    #                                    attrs={
+    #                                        "class": "tweet", 
+    #                                         "data-name": "Mars Weather"
+    #                                     })
    # Search Within Tweet for <p> Tag Containing Tweet Text
-    mars_weather = mars_weather_tweet.find("p", "tweet-text").get_text()
+    mars_weather = weather_soup.find("div", attrs={"dir": "auto", "dataset_id":"UserDescription"})
     return mars_weather
 
 
