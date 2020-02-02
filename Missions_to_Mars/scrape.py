@@ -6,6 +6,7 @@ import requests
 import pandas as pd
 import datetime as dt
 from selenium import webdriver
+import time
 
 # Set Executable Path & Initialize Chrome Browser
 executable_path = {"executable_path": "chromedriver"}
@@ -61,26 +62,20 @@ def featured_image(browser):
 def twitter_weather(browser):
     # Visit the Mars Weather Twitter Account
     twitter_url = "https://twitter.com/marswxreport?lang=en"
-    response_twitter = requests.get(twitter_url)
+    # response_twitter = requests.get(twitter_url)
     browser.visit(twitter_url)
-    
+    time.sleep(10)
     # Parse Results HTML with BeautifulSoup
     html = browser.html
-    weather_soup = bs(html, "html.parser")
+    soup = bs(html, "html.parser")
     
     # Find a Tweet with the data-name `Mars Weather`
-    # mars_weather_tweet = weather_soup.find("div", 
-    #                                    attrs={
-    #                                        "class": "tweet", 
-    #                                         "data-name": "Mars Weather"
-    #                                     })
-   # Search Within Tweet for <p> Tag Containing Tweet Text
-    mars_weather = weather_soup.find("div", attrs={"dir": "auto", "dataset_id":"UserDescription"})
+    mars_weather_tweet = soup.find("div", attrs={"data-testid": "tweet"})
+    mars_weather = mars_weather_tweet.find_all("span")[5].get_text()
     return mars_weather
 
-
 # Mars Facts Web Scraper
-def mars_facts():
+def mars_facts(browser):
     url_facts = "https://space-facts.com/mars/"
     # Visit the Mars Facts Site Using Pandas to Read
     try:
@@ -146,7 +141,7 @@ def scrape_all():
     news_title, news_paragraph = mars_news(browser)
     img_url = featured_image(browser)
     mars_weather = twitter_weather(browser)
-    facts = mars_facts()
+    facts = mars_facts(browser)
     hemisphere_image_urls = hemisphere(browser)
     timestamp = dt.datetime.now()
 
