@@ -4,27 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Mission to Mars</title>
+  <title style="color: #DC143C">Mission to Mars</title s>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head> 
-<body class="text-white" style="background-color: rgb(138, 93, 26);">
+<body class="text-white" style="background-color: rgb(243, 177, 78);">
     <div class="container">
-        <!-- Jumbotron -->
-        <!--IMAGES: https://images5.alphacoders.com/508/508358.jpg / https://vfxblog.com/wp-content/uploads/2016/12/marsattacks1b.jpg / https://i.gifer.com/embedded/download/NRfS.gif -->
-        <div class="jumbotron text-center" style="background-image: url(https://en.es-static.us/upl/2019/05/mars-curiosity-rover-okoruso-drill-hole-self-portrait-pia20602-pia20603.gif); height: 400px; background-position: center; background-size: cover;">
+        <div class="jumbotron text-center" style="height: 400px; background-position: center; background-size: cover;">
             <h1 class="display-3"><b>Mission to Mars</b></h1>
-            <p><a class="btn btn-danger btn-lg" href="\scrape" role="button">Scrape New Data</a></p>
+            <p><a class="btn btn-danger btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
         </div>
-        {% for data in mars %}
         <!-- NASA Mars News -->
         <div class="container">
             <div class="row" id="mars-news">
                 <div class="media">
                     <div class="media-body">
                         <h4>Latest Mars News</h4>
-                        <h5 style="color: #DC143C">{{data.news_title}}</h5>
-                        <p style="color: #8B0000">{{data.news_paragraph}}</p>
+                        <h5 style="color: #DC143C">{{mars.news_title}}</h5>
+                        <p style="color: #8B0000">{{mars.news_paragraph}}</p>
                     </div>
                 </div>
             </div>
@@ -35,14 +32,14 @@
                 <div class="col-lg-8 col-md-8 col-sm-12">
                 <h4>Featured Mars Image</h4>
                     <!-- If Images are False/None/Non-Existent, Then Default to Error Message -->
-                    <img src="{{data.featured_image | default('static/images/error.png', true) }}" class="img-responsive" style="max-width:100%; max-height: auto;" alt="Mars Featured Image"/>
+                    <img src="{{mars.featured_image | default('static/images/error.png', true) }}" class="img-responsive" style="max-width:100%; max-height: auto;" alt="Mars Featured Image"/>
                 </div>
                 <!-- Mars Weather -->
                 <div class="col-lg-4 col-md-4 col-sm-12" id="mars-weather">
                     <div class="card" style="max-width: 18rem;">
                         <div class="card-body text-white bg-danger">
                             <h4 class="card-title">Current Weather on Mars</h4>
-                            <p class="card-text">{{data.mars_weather}}</p>
+                            <p class="card-text">{{mars.weather}}</p>
                         </div>
                     </div>
                     <!-- Mars Facts -->
@@ -50,7 +47,7 @@
                     <div class="row" id="mars-facts">
                         <div class="col-md-12">
                             <h4>Mars Facts</h4>
-                            {{data.facts | safe}}
+                            {{mars.facts | safe}}
                         </div>
                     </div>
                 </div>
@@ -62,7 +59,7 @@
             <hr>
             <div class="col-md-12">
                 <div class="row" id="mars-hemispheres">
-                    {% for hemisphere in data.hemispheres %}
+                    {% for hemisphere in mars.hemispheres %}
                     <div class="col-md-6">
                         <div class="card text-white bg-danger" style="margin: 30px;">
                             <!-- If Images are False/None/Non-Existent, Then Default to Error Message -->
@@ -76,8 +73,6 @@
                 </div>
             </div>
         </div>
-        {% endfor %}
-
     </div>
     <!-- Bootstrap JavaScript -->
     <!-- jQuery, Popper.js & Bootstrap JS -->
